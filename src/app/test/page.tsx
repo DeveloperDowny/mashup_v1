@@ -3,27 +3,13 @@
 import React, { useEffect, useState } from "react";
 import APIRequests from "../../api";
 
-const page = () => {
-  //   const [data, setdata] = useState([]);
+const Page = () => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  //   const fetchData = async () => {
-  //     const res = await APIRequests.mtest().catch((err) => {
-  //       console.log(err);
-  //     });
-  //     if (!res) {
-  //       return;
-  //     }
-  //     console.log("res.data", res.data);
-
-  //     setdata(res.data);
-  //   };
-  //   useEffect(() => {
-  //     fetchData();
-  //   }, []);
 
   useEffect(() => {
     setIsLoading(true);
+
     async function fetchData() {
       try {
         const response = await fetch("/api/data"); // Use the API route you created or your backend URL
@@ -39,18 +25,24 @@ const page = () => {
 
     fetchData();
   }, []);
+
   return (
-    <div className="">
-      {isLoading && <div>Loading...</div>}
-      {!isLoading && data && (
-        <div>
-          {data.map((item, index) => (
-            <div key={index}>{item.fact}</div>
-          ))}
-        </div>
-      )}
+    <div className="flex justify-center">
+      <div className="mx-[4rem] my-[8rem] px-[3rem] py-[4rem] border border-gray-300 rounded w-[60vw]">
+        <h1 className="text-[4rem] font-semibold mb-4">Fun Facts</h1>
+        {isLoading && <div>Loading...</div>}
+        {!isLoading && data && (
+          <ul className="list-disc list-inside">
+            {data.map((item, index) => (
+              <li key={index} className="mb-2">
+                {item.fact}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </div>
   );
 };
 
-export default page;
+export default Page;
